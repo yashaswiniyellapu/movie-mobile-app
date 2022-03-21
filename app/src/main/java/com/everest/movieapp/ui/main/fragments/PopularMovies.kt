@@ -10,7 +10,6 @@ import com.everest.movieapp.R
 import com.everest.movieapp.api.Api
 import com.everest.movieapp.api.RetrofitHelper
 import com.everest.movieapp.databinding.FragmentPopularMoviesBinding
-import com.everest.movieapp.model.Movie
 import com.everest.movieapp.model.MovieDb
 import com.everest.movieapp.model.MovieRecyclerViewAdapter
 import retrofit2.Call
@@ -22,7 +21,6 @@ class PopularMovies:Fragment(R.layout.fragment_current_year_movies) {
     private lateinit var binding : FragmentPopularMoviesBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var movieRecyclerViewAdapter: MovieRecyclerViewAdapter
-    private var movieList:ArrayList<Movie> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater,

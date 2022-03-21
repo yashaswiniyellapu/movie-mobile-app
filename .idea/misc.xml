@@ -6,10 +6,12 @@
         <entry key="../../../../../layout/custom_preview.xml" value="0.1787037037037037" />
         <entry key="app/src/main/res/layout/activity_details_screen.xml" value="0.3022312373225152" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3029891304347826" />
+        <entry key="app/src/main/res/layout/activity_search_screen.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/fragment_current_year_movies.xml" value="0.2755340576171875" />
         <entry key="app/src/main/res/layout/fragment_main.xml" value="0.3029891304347826" />
         <entry key="app/src/main/res/layout/fragment_popular_movies.xml" value="0.3029891304347826" />
         <entry key="app/src/main/res/layout/movie_list.xml" value="0.3725" />
+        <entry key="app/src/main/res/menu/nav_menu.xml" value="0.5967290242513021" />
       </map>
     </option>
   </component>

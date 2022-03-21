@@ -28,4 +28,9 @@ class MainActivity : AppCompatActivity() {
         tabs.setupWithViewPager(viewPager)
 
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.nav_menu,menu)
+        return true
+    }
 }
