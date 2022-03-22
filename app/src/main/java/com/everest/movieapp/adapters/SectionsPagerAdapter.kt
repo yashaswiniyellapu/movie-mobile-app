@@ -1,4 +1,4 @@
-package com.everest.movieapp.ui.main
+package com.everest.movieapp.adapters
 
 import android.content.Context
 import androidx.fragment.app.Fragment

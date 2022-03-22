@@ -1,5 +1,6 @@
 package com.everest.movieapp
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -32,5 +33,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.nav_menu,menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if( item.itemId==R.id.nav_search)
+        {
+            val intent = Intent(this,SearchScreenActivity::class.java)
+            startActivity(intent)
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
