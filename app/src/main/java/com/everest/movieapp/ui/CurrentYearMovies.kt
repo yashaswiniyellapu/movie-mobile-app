@@ -1,15 +1,17 @@
-package com.everest.movieapp.ui.main.fragments
+package com.everest.movieapp.ui
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.R
+import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.api.Api
 import com.everest.movieapp.api.RetrofitHelper
 import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
 import com.everest.movieapp.model.MovieDb
-import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

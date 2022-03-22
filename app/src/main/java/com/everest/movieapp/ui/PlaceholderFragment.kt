@@ -1,4 +1,4 @@
-package com.everest.movieapp.ui.main
+package com.everest.movieapp.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
