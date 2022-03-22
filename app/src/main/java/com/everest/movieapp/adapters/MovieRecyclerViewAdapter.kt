@@ -20,7 +20,7 @@ import com.everest.movieapp.model.Result
 class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
     RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>(), Filterable {
 
-    private var tempMovieList = ArrayList<Result>()
+    private var fullMovieList = ArrayList<Result>(dataModel.results)
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -41,17 +41,17 @@ class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Glide.with(holder.itemView.context)
-            .load("https://image.tmdb.org/t/p/original/" + dataModel.results[position].poster_path)
+            .load("https://image.tmdb.org/t/p/original/" + fullMovieList[position].poster_path)
             .into(holder.image)
 
 
-        holder.title.text = dataModel.results[position].title
-        holder.releaseDate.text = dataModel.results[position].release_date
-        holder.voteRate.text = dataModel.results[position].vote_count.toString()
+        holder.title.text = fullMovieList[position].title
+        holder.releaseDate.text = fullMovieList[position].release_date
+        holder.voteRate.text = fullMovieList[position].vote_count.toString()
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailsScreenActivity::class.java)
-            intent.putExtra("dataset", dataModel.results[position])
+            intent.putExtra("dataset", fullMovieList.get(position))
 
             holder.itemView.context.startActivity(intent)
 
@@ -62,23 +62,23 @@ class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
     }
 
     override fun getItemCount(): Int {
-        return dataModel.results.size
+        return fullMovieList.size
     }
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 if (charSequence.toString().isEmpty()) {
-                    tempMovieList.addAll(dataModel.results)
+                    fullMovieList.addAll(dataModel.results)
                 } else {
                     val filteredList = ArrayList<Result>()
                     dataModel.results.filter {
                         it.title.lowercase().contains(charSequence.toString().lowercase())
                     }.forEach { filteredList.add(it) }
-                    tempMovieList = filteredList
+                    fullMovieList = filteredList
                 }
                 val filterResults = FilterResults()
-                filterResults.values = tempMovieList
+                filterResults.values = fullMovieList
                 return filterResults
             }
 
@@ -86,7 +86,7 @@ class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
                 charSequence: CharSequence?,
                 filterResults: FilterResults?
             ) {
-                tempMovieList = filterResults?.values as ArrayList<Result>
+                fullMovieList = filterResults?.values as ArrayList<Result>
                 notifyDataSetChanged()
             }
         }
