@@ -43,9 +43,10 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
         currentYearMovieData.enqueue(object : Callback<MovieDb> {
 
             override fun onResponse(call: Call<MovieDb>, response: Response<MovieDb>) {
-                movieRecyclerViewAdapter = MovieRecyclerViewAdapter(response.body()!!)
-                recyclerView.adapter = movieRecyclerViewAdapter
-
+                movieRecyclerViewAdapter =
+                    MovieRecyclerViewAdapter(response.body()!!) //set data in recycler view adapter
+                recyclerView.adapter =
+                    movieRecyclerViewAdapter    //set custom recycler view adapter to recycleView adapter
             }
 
             override fun onFailure(call: Call<MovieDb>, t: Throwable) {

@@ -2,13 +2,13 @@ package com.everest.movieapp
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.everest.movieapp.adapters.SectionsPagerAdapter
 import com.everest.movieapp.databinding.ActivityMainBinding
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,14 +29,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.nav_menu,menu)
+        menuInflater.inflate(R.menu.nav_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if( item.itemId==R.id.nav_search)
-        {
-            val intent = Intent(this,SearchScreenActivity::class.java)
+        if (item.itemId == R.id.nav_search) {
+            val intent = Intent(this, SearchScreenActivity::class.java)
             startActivity(intent)
         }
         return super.onOptionsItemSelected(item)

@@ -5,11 +5,11 @@ import android.view.Menu
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.api.Api
 import com.everest.movieapp.api.RetrofitHelper
 import com.everest.movieapp.databinding.ActivitySearchScreenBinding
 import com.everest.movieapp.model.MovieDb
-import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,13 +47,13 @@ class SearchScreenActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.nav_menu, menu)
         val menuItem = menu?.findItem(R.id.nav_search)
         val searchView = menuItem?.actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                movieRecyclerViewAdapter?.filter?.filter(newText)
+                movieRecyclerViewAdapter.filter.filter(newText)
                 return false
             }
 

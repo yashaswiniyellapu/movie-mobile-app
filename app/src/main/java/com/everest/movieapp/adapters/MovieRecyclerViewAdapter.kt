@@ -1,5 +1,8 @@
 package com.everest.movieapp.adapters
 
+/**
+ * Recycler view adapter sets the data in view.
+ */
 
 import android.content.Intent
 import android.util.Log
@@ -61,11 +64,11 @@ class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
 
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int {   //gets the item count
         return fullMovieList.size
     }
 
-    override fun getFilter(): Filter {
+    override fun getFilter(): Filter {     //filters the users input while searching with charSequence
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 if (charSequence.toString().isEmpty()) {
