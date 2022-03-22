@@ -1,7 +1,6 @@
 package com.everest.movieapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.everest.movieapp.databinding.ActivityDetailsScreenBinding
@@ -26,9 +25,5 @@ class DetailsScreenActivity:AppCompatActivity() {
         binding.popularityTv.text= dataSet?.popularity.toString()
         binding.releaseDateTv.text= dataSet?.release_date
         binding.voteAverageTv.text= dataSet?.vote_average.toString()
-
-
-
-
     }
 }
