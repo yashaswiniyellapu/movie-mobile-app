@@ -3,8 +3,8 @@ package com.everest.movieapp
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.databinding.ActivityDetailsScreenBinding
-import com.everest.movieapp.model.Result
 
 class DetailsScreenActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.everest.movieapp.constants
+package com.everest.movieapp.utils.constants
 
 class Constants {
 

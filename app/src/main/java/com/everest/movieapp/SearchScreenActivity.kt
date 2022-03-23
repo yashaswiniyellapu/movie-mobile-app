@@ -4,43 +4,30 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
-import com.everest.movieapp.data.api.Api
-import com.everest.movieapp.data.api.RetrofitHelper
 import com.everest.movieapp.databinding.ActivitySearchScreenBinding
-import com.everest.movieapp.model.MovieDb
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
+import com.everest.movieapp.ui.main.viewmodel.PopularMoviesViewModel
 
 class SearchScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchScreenBinding
     private lateinit var movieRecyclerViewAdapter: MovieRecyclerViewAdapter
     private lateinit var recyclerView: RecyclerView
-
+    private lateinit var popularMoviesViewModel: PopularMoviesViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val api: Api = RetrofitHelper.getInstance().create(Api::class.java)
-        val currentYearMovieData = api.getPopularViews()
         recyclerView = binding.searchTv
 
-        currentYearMovieData.enqueue(object : Callback<MovieDb> {
+        popularMoviesViewModel = ViewModelProvider(this).get(PopularMoviesViewModel::class.java)
+        popularMoviesViewModel.moviesLiveData.observe(this) {
+            movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it)
+            recyclerView.adapter = movieRecyclerViewAdapter
+        }
 
-            override fun onResponse(call: Call<MovieDb>, response: Response<MovieDb>) {
-                movieRecyclerViewAdapter = MovieRecyclerViewAdapter(response.body()!!)
-                recyclerView.adapter = movieRecyclerViewAdapter
-
-            }
-
-            override fun onFailure(call: Call<MovieDb>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -6,8 +6,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.everest.movieapp.adapters.SectionsPagerAdapter
 import com.everest.movieapp.databinding.ActivityMainBinding
+import com.everest.movieapp.ui.adapters.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {

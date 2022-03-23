@@ -1,4 +1,4 @@
-package com.everest.movieapp.adapters
+package com.everest.movieapp.ui.adapters
 
 /**
  * Recycler view adapter sets the data in view.
@@ -17,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.everest.movieapp.DetailsScreenActivity
 import com.everest.movieapp.R
-import com.everest.movieapp.model.MovieDb
-import com.everest.movieapp.model.Result
+import com.everest.movieapp.data.model.Result
 
-class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
+class MovieRecyclerViewAdapter(var dataModel: List<Result>) :
     RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>(), Filterable {
 
-    private var fullMovieList = ArrayList<Result>(dataModel.results)
+    private var fullMovieList = ArrayList<Result>(dataModel)
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -54,7 +53,7 @@ class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailsScreenActivity::class.java)
-            intent.putExtra("dataset", fullMovieList.get(position))
+            intent.putExtra("dataset", fullMovieList[position])
 
             holder.itemView.context.startActivity(intent)
 
@@ -72,10 +71,10 @@ class MovieRecyclerViewAdapter(var dataModel: MovieDb) :
         return object : Filter() {
             override fun performFiltering(charSequence: CharSequence?): FilterResults {
                 if (charSequence.toString().isEmpty()) {
-                    fullMovieList.addAll(dataModel.results)
+                    fullMovieList.addAll(dataModel)
                 } else {
                     val filteredList = ArrayList<Result>()
-                    dataModel.results.filter {
+                    dataModel.filter {
                         it.title.lowercase().contains(charSequence.toString().lowercase())
                     }.forEach { filteredList.add(it) }
                     fullMovieList = filteredList

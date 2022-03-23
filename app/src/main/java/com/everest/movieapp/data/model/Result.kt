@@ -1,4 +1,4 @@
-package com.everest.movieapp.model
+package com.everest.movieapp.data.model
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

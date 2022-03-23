@@ -4,18 +4,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.everest.movieapp.model.Result
+import com.everest.movieapp.data.model.Result
 
 @Database(entities = [Result::class], version = 1, exportSchema = false)
-abstract class MovieRoomDataBase:RoomDatabase() {
+abstract class MovieRoomDataBase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
+
     companion object {
 
         @Volatile
         private var INSTANCE: MovieRoomDataBase? = null
 
-        fun getDatabase(context: Context) : MovieRoomDataBase {
+        fun getDatabase(context: Context): MovieRoomDataBase {
 
             if (INSTANCE != null) return INSTANCE!!
 
