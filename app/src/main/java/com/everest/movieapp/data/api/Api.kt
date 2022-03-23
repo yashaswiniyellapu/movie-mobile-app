@@ -1,4 +1,4 @@
-package com.everest.movieapp.api
+package com.everest.movieapp.data.api
 
 import com.everest.movieapp.model.MovieDb
 import retrofit2.Call

@@ -6,8 +6,8 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
-import com.everest.movieapp.api.Api
-import com.everest.movieapp.api.RetrofitHelper
+import com.everest.movieapp.data.api.Api
+import com.everest.movieapp.data.api.RetrofitHelper
 import com.everest.movieapp.databinding.ActivitySearchScreenBinding
 import com.everest.movieapp.model.MovieDb
 import retrofit2.Call

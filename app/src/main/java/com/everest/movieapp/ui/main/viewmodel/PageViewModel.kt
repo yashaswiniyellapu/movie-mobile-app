@@ -1,4 +1,4 @@
-package com.everest.movieapp.viewmodel
+package com.everest.movieapp.ui.main.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

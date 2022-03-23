@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.R
 import com.everest.movieapp.adapters.MovieRecyclerViewAdapter
-import com.everest.movieapp.api.Api
-import com.everest.movieapp.api.RetrofitHelper
+import com.everest.movieapp.data.api.Api
+import com.everest.movieapp.data.api.RetrofitHelper
 import com.everest.movieapp.databinding.FragmentPopularMoviesBinding
 import com.everest.movieapp.model.MovieDb
 import retrofit2.Call

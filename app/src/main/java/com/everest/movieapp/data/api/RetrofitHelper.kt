@@ -1,4 +1,4 @@
-package com.everest.movieapp.api
+package com.everest.movieapp.data.api
 
 import com.everest.movieapp.constants.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
