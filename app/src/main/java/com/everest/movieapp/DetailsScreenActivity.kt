@@ -16,14 +16,14 @@ class DetailsScreenActivity : AppCompatActivity() {
         binding = ActivityDetailsScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val dataSet = intent.getParcelableExtra<Result>("dataset")
+        val movieData = intent.getParcelableExtra<Result>("dataset")
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/original/" + dataSet?.poster_path)
+            .load( movieData?.poster_path)
             .into(binding.imageViewTv)
-        binding.titleTv.text = dataSet?.title
-        binding.descriptionTv.text = dataSet?.overview
-        binding.popularityTv.text = dataSet?.popularity.toString()
-        binding.releaseDateTv.text = dataSet?.release_date
-        binding.voteAverageTv.text = dataSet?.vote_average.toString()
+        binding.titleTv.text = movieData?.title
+        binding.descriptionTv.text = movieData?.overview
+        binding.popularityTv.text = movieData?.popularity.toString()
+        binding.releaseDateTv.text = movieData?.release_date
+        binding.voteAverageTv.text = movieData?.vote_average.toString()
     }
 }

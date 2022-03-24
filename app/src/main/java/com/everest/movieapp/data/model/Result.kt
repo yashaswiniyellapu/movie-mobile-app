@@ -26,7 +26,7 @@ data class Result(
     @ColumnInfo(name = "popularity")
     val popularity: Double,
     @ColumnInfo(name = "poster_path")
-    val poster_path: String,
+    var poster_path: String,
     @ColumnInfo(name = "release_date")
     val release_date: String,
     @ColumnInfo(name = "video")

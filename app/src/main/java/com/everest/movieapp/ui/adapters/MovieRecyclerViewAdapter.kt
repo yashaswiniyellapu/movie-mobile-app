@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.everest.movieapp.DetailsScreenActivity
 import com.everest.movieapp.R
 import com.everest.movieapp.data.model.Result
+import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
 
 class MovieRecyclerViewAdapter(var dataModel: List<Result>) :
     RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>(), Filterable {
@@ -42,8 +43,10 @@ class MovieRecyclerViewAdapter(var dataModel: List<Result>) :
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+        fullMovieList[position].poster_path = IMAGE_BASE_URL + fullMovieList[position].poster_path
         Glide.with(holder.itemView.context)
-            .load("https://image.tmdb.org/t/p/original/" + fullMovieList[position].poster_path)
+            .load(fullMovieList[position].poster_path)
             .into(holder.image)
 
 

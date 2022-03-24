@@ -21,7 +21,7 @@ class CurrentYearMoviesViewModel(context: Context) : ViewModel(){
         movieRepository.getCurrentYearMovies()
         movieRepository.movieList.observeForever(
             Observer {
-                moviesMutableLiveData.value = movieRepository.movieList.value?.results
+                moviesMutableLiveData.value = movieRepository.movieList.value!!
             }
 
         )

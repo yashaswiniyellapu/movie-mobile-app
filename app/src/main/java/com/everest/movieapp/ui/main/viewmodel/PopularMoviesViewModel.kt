@@ -2,6 +2,7 @@ package com.everest.movieapp.ui.main.viewmodel
 
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.*
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.repository.MovieRepository
@@ -21,8 +22,9 @@ class PopularMoviesViewModel(context: Context) :ViewModel() {
 
         movieRepository.getPopularMovies()
         movieRepository.movieList.observeForever {
-            moviesMutableLiveData.value = movieRepository.movieList.value?.results
+            moviesMutableLiveData.value = movieRepository.movieList.value
         }
+        Log.i("testData",movieRepository.movieList.value.toString())
 
     }
 
