@@ -12,6 +12,7 @@ import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.databinding.FragmentPopularMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.PopularMoviesViewModel
+import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
 
 class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
 
@@ -19,6 +20,7 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var movieRecyclerViewAdapter: MovieRecyclerViewAdapter
     private lateinit var popularMoviesViewModel: PopularMoviesViewModel
+    private lateinit var viewModelFactory:ViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,9 +30,8 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
         binding = FragmentPopularMoviesBinding.inflate(layoutInflater, container, false)
 
         recyclerView = binding.popularRecyclerView
-        popularMoviesViewModel = ViewModelProvider(
-            this,
-        )[PopularMoviesViewModel::class.java]
+        viewModelFactory= ViewModelFactory(requireContext())
+        popularMoviesViewModel = ViewModelProvider(this,viewModelFactory)[PopularMoviesViewModel::class.java]
         val movieList: List<Result> = ArrayList()
         movieRecyclerViewAdapter =
             MovieRecyclerViewAdapter(movieList)
@@ -41,8 +42,6 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
                 MovieRecyclerViewAdapter(it)
             recyclerView.adapter = movieRecyclerViewAdapter
         }
-
-
         return binding.root
     }
 

@@ -12,6 +12,7 @@ import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.CurrentYearMoviesViewModel
+import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
 
 class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
 
@@ -19,20 +20,18 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var movieRecyclerViewAdapter: MovieRecyclerViewAdapter
     private lateinit var currentYearMoviesViewModel: CurrentYearMoviesViewModel
+    private lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCurrentYearMoviesBinding.inflate(layoutInflater, container, false)
         recyclerView = binding.currentYearRecyclerView
+        viewModelFactory = ViewModelFactory(requireContext())
         currentYearMoviesViewModel =
-            ViewModelProvider(this).get(CurrentYearMoviesViewModel::class.java)
+            ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
         val movieList: List<Result> = ArrayList()
-        movieRecyclerViewAdapter =
-            MovieRecyclerViewAdapter(movieList)
 
+        movieRecyclerViewAdapter = MovieRecyclerViewAdapter(movieList)
         currentYearMoviesViewModel.moviesLiveData.observe(viewLifecycleOwner)
         {
             movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it)

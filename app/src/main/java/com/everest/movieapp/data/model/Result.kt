@@ -17,8 +17,6 @@ data class Result(
     val adult: Boolean,
     @ColumnInfo(name = "backdrop_path")
     val backdrop_path: String,
-    @ColumnInfo(name = "genre_ids")
-    val genre_ids: List<Int>,
     @ColumnInfo(name = "original_language")
     val original_language: String,
     @ColumnInfo(name = "original_title")
