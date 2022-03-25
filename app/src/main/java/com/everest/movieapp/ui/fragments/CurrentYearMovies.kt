@@ -27,21 +27,22 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentCurrentYearMoviesBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.currentYearRecyclerView
         viewModelFactory = ViewModelFactory(MovieRepository(requireContext()))
         currentYearMoviesViewModel =
             ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
         val movieList: List<Result> = ArrayList()
-
         movieRecyclerViewAdapter = MovieRecyclerViewAdapter(movieList)
         currentYearMoviesViewModel.moviesLiveData.observe(viewLifecycleOwner)
         {
             movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it)
             recyclerView.adapter = movieRecyclerViewAdapter
         }
-
-
-        return binding.root
     }
 
 }

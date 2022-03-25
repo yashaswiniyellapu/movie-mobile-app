@@ -29,7 +29,11 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPopularMoviesBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.popularRecyclerView
         viewModelFactory = ViewModelFactory(MovieRepository(requireContext()))
         popularMoviesViewModel =
@@ -44,7 +48,6 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
                 MovieRecyclerViewAdapter(it)
             recyclerView.adapter = movieRecyclerViewAdapter
         }
-        return binding.root
     }
 
 }
