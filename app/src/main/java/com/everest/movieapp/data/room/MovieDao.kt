@@ -16,4 +16,6 @@ interface MovieDao {
     fun getPopularMovies():List<Result>
     @Query("select * from result as r where strftime('%Y', r.release_date) = '2022'")
     fun getCurrentYearMovies():List<Result>
+    @Query("select * from result as r where title like  '%'||:movieName ||'%'")
+    fun searchMovie(movieName:String):List<Result>
 }

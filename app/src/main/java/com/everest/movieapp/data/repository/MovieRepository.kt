@@ -3,6 +3,7 @@ package com.everest.movieapp.data.repository
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.MovieDb
@@ -22,23 +23,22 @@ class MovieRepository(private val context: Context) {
     fun getPopularMovies() {
         if (checkInternetConnection()) {
             getResponse(movieApi.getPopularViews())
-        } else {
-            movieList.value = movieRoomDataBase.movieDao().getPopularMovies()
-            Log.i("testmovieList", movieList.value.toString())
         }
-
+            movieList.value = movieRoomDataBase.movieDao().getPopularMovies()
     }
 
     fun getCurrentYearMovies() {
         if (checkInternetConnection()) {
             getResponse(movieApi.getCurrentYearMovies())
-        } else {
-            movieList.value = movieRoomDataBase.movieDao().getCurrentYearMovies()
         }
+            movieList.value = movieRoomDataBase.movieDao().getCurrentYearMovies()
     }
 
     fun searchMovie(movieName: String) {
-        getResponse(movieApi.searchMovie(movieName, API_KEY))
+        if (checkInternetConnection()) {
+            getResponse(movieApi.searchMovie(movieName, API_KEY))
+        }
+        movieList.value= movieRoomDataBase.movieDao().searchMovie(movieName)
     }
 
     private fun getResponse(movies: Call<MovieDb>) {
@@ -49,7 +49,7 @@ class MovieRepository(private val context: Context) {
             }
 
             override fun onFailure(call: Call<MovieDb>, t: Throwable) {
-                Log.i("hello", "failure")
+                Toast.makeText(context,"No API response",Toast.LENGTH_LONG).show()
             }
 
         })
