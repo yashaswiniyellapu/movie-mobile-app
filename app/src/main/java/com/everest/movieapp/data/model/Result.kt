@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "result")
 data class Result(
     @PrimaryKey
-    @ColumnInfo(name ="id")
+    @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "title")
     val title: String?,

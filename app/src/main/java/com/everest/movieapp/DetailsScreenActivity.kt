@@ -18,7 +18,7 @@ class DetailsScreenActivity : AppCompatActivity() {
 
         val movieData = intent.getParcelableExtra<Result>("dataset")
         Glide.with(this)
-            .load( movieData?.poster_path)
+            .load(movieData?.poster_path)
             .into(binding.imageViewTv)
         binding.titleTv.text = movieData?.title
         binding.descriptionTv.text = movieData?.overview

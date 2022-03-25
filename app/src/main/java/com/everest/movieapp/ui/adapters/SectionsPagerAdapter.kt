@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Lifecycle
 import com.everest.movieapp.ui.fragments.CurrentYearMovies
 import com.everest.movieapp.ui.fragments.PopularMovies
 
@@ -13,10 +12,11 @@ import com.everest.movieapp.ui.fragments.PopularMovies
  * one of the sections/tabs/pages.
  */
 class SectionsPagerAdapter(
-    private val context: Context,fm: FragmentManager) :
+    private val context: Context, fm: FragmentManager
+) :
     FragmentPagerAdapter(fm) {
 
-    private var fragmentList:List<Fragment> = listOf(PopularMovies(),CurrentYearMovies())
+    private var fragmentList: List<Fragment> = listOf(PopularMovies(), CurrentYearMovies())
 
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.

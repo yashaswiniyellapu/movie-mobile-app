@@ -8,20 +8,20 @@ import androidx.lifecycle.ViewModel
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.repository.MovieRepository
 
-class SearchViewModel(context:Context) :ViewModel(){
+class SearchViewModel(private val movieRepository: MovieRepository) : ViewModel() {
     private var moviesMutableLiveData = MutableLiveData<List<Result>>()
-    private  var movieRepository= MovieRepository(context)
+//    private var movieRepository = MovieRepository(context)
     val moviesLiveData: LiveData<List<Result>>
         get() = moviesMutableLiveData
 
 
-     fun setData(movieName:String) {
+    fun setData(movieName: String) {
 
         movieRepository.searchMovie(movieName)
         movieRepository.movieList.observeForever {
             moviesMutableLiveData.value = movieRepository.movieList.value
         }
-        Log.i("testData",movieRepository.movieList.value.toString())
+        Log.i("testData", movieRepository.movieList.value.toString())
 
     }
 }

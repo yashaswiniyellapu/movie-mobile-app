@@ -3,11 +3,12 @@ package com.everest.movieapp.ui.main.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.everest.movieapp.data.repository.MovieRepository
 
-class ViewModelFactory(val context: Context):ViewModelProvider.Factory {
+class ViewModelFactory(private val movieRepository: MovieRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(Context::class.java)
-            .newInstance(context)
+        return modelClass.getConstructor(MovieRepository::class.java)
+            .newInstance(movieRepository)
     }
 
 }

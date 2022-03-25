@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.R
 import com.everest.movieapp.data.model.Result
+import com.everest.movieapp.data.repository.MovieRepository
 import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.CurrentYearMoviesViewModel
@@ -23,10 +24,11 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
     private lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         binding = FragmentCurrentYearMoviesBinding.inflate(layoutInflater, container, false)
         recyclerView = binding.currentYearRecyclerView
-        viewModelFactory = ViewModelFactory(requireContext())
+        viewModelFactory = ViewModelFactory(MovieRepository(requireContext()))
         currentYearMoviesViewModel =
             ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
         val movieList: List<Result> = ArrayList()
