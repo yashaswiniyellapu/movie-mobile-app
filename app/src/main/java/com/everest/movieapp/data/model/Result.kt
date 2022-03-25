@@ -12,27 +12,27 @@ data class Result(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     @ColumnInfo(name = "title")
-    val title: String,
+    val title: String?,
     @ColumnInfo(name = "adult")
-    val adult: Boolean,
+    val adult: Boolean?,
     @ColumnInfo(name = "backdrop_path")
-    val backdrop_path: String,
+    val backdrop_path: String?,
     @ColumnInfo(name = "original_language")
-    val original_language: String,
+    val original_language: String?,
     @ColumnInfo(name = "original_title")
-    val original_title: String,
+    val original_title: String?,
     @ColumnInfo(name = "overview")
-    val overview: String,
+    val overview: String?,
     @ColumnInfo(name = "popularity")
-    val popularity: Double,
+    val popularity: Double?,
     @ColumnInfo(name = "poster_path")
-    var poster_path: String,
+    var poster_path: String?,
     @ColumnInfo(name = "release_date")
-    val release_date: String,
+    val release_date: String?,
     @ColumnInfo(name = "video")
-    val video: Boolean,
+    val video: Boolean?,
     @ColumnInfo(name = "vote_average")
-    val vote_average: Double,
+    val vote_average: Double?,
     @ColumnInfo(name = "vote_count")
-    val vote_count: Int
+    val vote_count: Int?
 ) : Parcelable

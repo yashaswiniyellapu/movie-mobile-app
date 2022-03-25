@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.databinding.ActivitySearchScreenBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
-import com.everest.movieapp.ui.main.viewmodel.PopularMoviesViewModel
+import com.everest.movieapp.ui.main.viewmodel.SearchViewModel
 import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
 
 class SearchScreenActivity : AppCompatActivity() {
@@ -16,7 +16,7 @@ class SearchScreenActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchScreenBinding
     private lateinit var movieRecyclerViewAdapter: MovieRecyclerViewAdapter
     private lateinit var recyclerView: RecyclerView
-    private lateinit var popularMoviesViewModel: PopularMoviesViewModel
+    private lateinit var searchMoviesViewModel: SearchViewModel
     private lateinit var viewModelFactory:ViewModelFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +26,9 @@ class SearchScreenActivity : AppCompatActivity() {
 
         viewModelFactory= ViewModelFactory(this)
 
-        popularMoviesViewModel = ViewModelProvider(this,viewModelFactory).get(PopularMoviesViewModel::class.java)
-        popularMoviesViewModel.moviesLiveData.observe(this) {
+        searchMoviesViewModel = ViewModelProvider(this,viewModelFactory).get(SearchViewModel::class.java)
+
+        searchMoviesViewModel.moviesLiveData.observe(this) {
             movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it)
             recyclerView.adapter = movieRecyclerViewAdapter
         }
@@ -44,11 +45,12 @@ class SearchScreenActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                movieRecyclerViewAdapter.filter.filter(newText)
+                searchMoviesViewModel.setData(newText!!)
                 return false
             }
 
         })
         return super.onPrepareOptionsMenu(menu)
     }
+
 }

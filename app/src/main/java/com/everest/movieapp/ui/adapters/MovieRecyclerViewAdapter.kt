@@ -21,7 +21,7 @@ import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
 
 class MovieRecyclerViewAdapter(var dataModel: List<Result>) :
-    RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>(), Filterable {
+    RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>() {
 
     private var fullMovieList = ArrayList<Result>(dataModel)
 
@@ -70,33 +70,7 @@ class MovieRecyclerViewAdapter(var dataModel: List<Result>) :
         return fullMovieList.size
     }
 
-    override fun getFilter(): Filter {     //filters the users input while searching with charSequence
-        return object : Filter() {
-            override fun performFiltering(charSequence: CharSequence?): FilterResults {
-                if (charSequence.toString().isEmpty()) {
-                    fullMovieList.addAll(dataModel)
-                } else {
-                    val filteredList = ArrayList<Result>()
-                    dataModel.filter {
-                        it.title.lowercase().contains(charSequence.toString().lowercase())
-                    }.forEach { filteredList.add(it) }
-                    fullMovieList = filteredList
-                }
-                val filterResults = FilterResults()
-                filterResults.values = fullMovieList
-                return filterResults
-            }
 
-            override fun publishResults(
-                charSequence: CharSequence?,
-                filterResults: FilterResults?
-            ) {
-                fullMovieList = filterResults?.values as ArrayList<Result>
-                notifyDataSetChanged()
-            }
-        }
-
-    }
 }
 
 

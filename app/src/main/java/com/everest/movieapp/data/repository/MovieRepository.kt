@@ -8,13 +8,15 @@ import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.MovieDb
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.room.MovieRoomDataBase
+import com.everest.movieapp.utils.constants.Constants.Companion.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MovieRepository(private val context: Context) {
     private val movieApi = MovieApi.getInstance().create(MovieApi::class.java)
-    private  var movieRoomDataBase= MovieRoomDataBase.getDatabase(context)
+    private var movieRoomDataBase = MovieRoomDataBase.getDatabase(context)
+
 
     var movieList = MutableLiveData<List<Result>>()
     fun getPopularMovies() {
@@ -35,12 +37,15 @@ class MovieRepository(private val context: Context) {
         }
     }
 
+    fun searchMovie(movieName: String) {
+        getResponse(movieApi.searchMovie(movieName, API_KEY))
+    }
+
     private fun getResponse(movies: Call<MovieDb>) {
         movies.enqueue(object : Callback<MovieDb> {
             override fun onResponse(call: Call<MovieDb>, response: Response<MovieDb>) {
                 movieList.value = response.body()?.results
                 persistDataIntoRoomDatabase()
-                getDataFromRoomDatabase()
             }
 
             override fun onFailure(call: Call<MovieDb>, t: Throwable) {
@@ -50,36 +55,9 @@ class MovieRepository(private val context: Context) {
         })
     }
 
-    fun persistDataIntoRoomDatabase() {
+    private fun persistDataIntoRoomDatabase() {
         movieRoomDataBase.movieDao().insertAll(movieList.value!!)
     }
-
-    fun getDataFromRoomDatabase() {
-//        Log.i("testRooomDataBase",movieRoomDataBase.movieDao().getAllMovies().toString())
-    }
-
-
-//    fun checkInternetConnection() {
-//
-//        val networkRequest = NetworkRequest.Builder()
-//            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-//            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-//            .build()
-//        val networkCallBack= object:ConnectivityManager.NetworkCallback() {
-//            override fun onAvailable(network: Network) {
-//                super.onAvailable(network)
-//                Log.i("networkOn","Internet is on")
-//                getResponse(movieApi.getPopularViews())
-//            }
-//
-//            override fun onLost(network: Network) {
-//                super.onLost(network)
-//                Log.i("networkOff","Internet is off")
-//            }
-//        }
-//        val connectivityManager= getSystemService(ConnectivityManager::class.java) as ConnectivityManager
-//        connectivityManager.requestNetwork(networkRequest, networkCallback)
-//    }
 
     private fun checkInternetConnection(): Boolean {
         val connectivityManager =
