@@ -1,6 +1,5 @@
 package com.everest.movieapp.ui.main.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.everest.movieapp.data.repository.MovieRepository

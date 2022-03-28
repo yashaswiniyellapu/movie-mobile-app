@@ -1,6 +1,5 @@
 package com.everest.movieapp.ui.main.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -9,7 +8,6 @@ import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.repository.MovieRepository
 
 class CurrentYearMoviesViewModel(private val movieRepository: MovieRepository) : ViewModel() {
-//    private var movieRepository = MovieRepository(context)
     private var moviesMutableLiveData = MutableLiveData<List<Result>>()
     val moviesLiveData: LiveData<List<Result>>
         get() = moviesMutableLiveData
