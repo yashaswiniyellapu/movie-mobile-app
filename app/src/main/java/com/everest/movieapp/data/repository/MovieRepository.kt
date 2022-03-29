@@ -1,8 +1,12 @@
 package com.everest.movieapp.data.repository
 
 import android.content.Context
+import android.icu.util.Calendar
 import android.net.ConnectivityManager
+import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.MovieDb
@@ -12,6 +16,8 @@ import com.everest.movieapp.utils.constants.Constants.Companion.API_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.Year
 
 class MovieRepository(private val context: Context) {
     private val movieApi = MovieApi.getInstance().create(MovieApi::class.java)
@@ -21,14 +27,16 @@ class MovieRepository(private val context: Context) {
     var movieList = MutableLiveData<List<Result>>()
     fun getPopularMovies() {
         if (checkInternetConnection()) {
-            getResponse(movieApi.getPopularViews())
+            getResponse(movieApi.getMovies())
         }
         movieList.value = movieRoomDataBase.movieDao().getPopularMovies()
     }
 
+
+
     fun getCurrentYearMovies() {
         if (checkInternetConnection()) {
-            getResponse(movieApi.getCurrentYearMovies())
+            getResponse(movieApi.getMovies(LocalDate.now().year))
         }
         movieList.value = movieRoomDataBase.movieDao().getCurrentYearMovies()
     }

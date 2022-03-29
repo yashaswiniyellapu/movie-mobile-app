@@ -1,5 +1,6 @@
 package com.everest.movieapp.ui.main.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -24,7 +25,7 @@ class CurrentYearMoviesViewModel(private val movieRepository: MovieRepository) :
             }
 
         )
-
+        Log.i("testCurrent", movieRepository.movieList.value.toString())
     }
 
 }
