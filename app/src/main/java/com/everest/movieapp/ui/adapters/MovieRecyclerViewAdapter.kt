@@ -42,11 +42,11 @@ class MovieRecyclerViewAdapter(var dataModel: List<Result>) :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        fullMovieList[position].poster_path = IMAGE_BASE_URL + fullMovieList[position].poster_path
+       fullMovieList[position].poster_path = IMAGE_BASE_URL + fullMovieList[position].poster_path
         Glide.with(holder.itemView.context)
             .load(fullMovieList[position].poster_path)
             .into(holder.image)
-
+Log.i("imageTest",fullMovieList[position].poster_path.toString())
 
         holder.title.text = fullMovieList[position].title
         holder.releaseDate.text = fullMovieList[position].release_date

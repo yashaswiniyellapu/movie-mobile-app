@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

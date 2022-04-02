@@ -1,6 +1,6 @@
 package com.everest.movieapp.data.api
 
-import com.everest.movieapp.data.api.interceptor.ApiNetworkInterceptor
+import com.everest.movieapp.data.api.interceptor.ApiInterceptor
 import com.everest.movieapp.data.model.MovieDb
 import com.everest.movieapp.utils.constants.Constants
 import okhttp3.OkHttpClient
@@ -23,7 +23,7 @@ interface MovieApi {
 
     companion object {
         private val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(ApiNetworkInterceptor())
+            .addInterceptor(ApiInterceptor())
             .build()
 
         fun getInstance(): Retrofit {

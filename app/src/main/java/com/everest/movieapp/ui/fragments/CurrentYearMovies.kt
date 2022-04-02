@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.R
+import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.repository.MovieRepository
 import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
@@ -33,7 +34,7 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.currentYearRecyclerView
-        viewModelFactory = ViewModelFactory(MovieRepository(requireContext()))
+        viewModelFactory = ViewModelFactory(MovieRepository(MovieApi.getInstance().create(MovieApi::class.java)))
         currentYearMoviesViewModel =
             ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
         val movieList: List<Result> = ArrayList()

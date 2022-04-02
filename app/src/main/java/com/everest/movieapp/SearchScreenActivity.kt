@@ -6,6 +6,7 @@ import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.repository.MovieRepository
 import com.everest.movieapp.databinding.ActivitySearchScreenBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
@@ -25,7 +26,8 @@ class SearchScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
         recyclerView = binding.searchTv
 
-        viewModelFactory = ViewModelFactory(MovieRepository(this))
+        viewModelFactory =
+            ViewModelFactory(MovieRepository(MovieApi.getInstance().create(MovieApi::class.java)))
 
         searchMoviesViewModel =
             ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
