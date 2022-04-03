@@ -1,31 +1,28 @@
 package com.everest.movieapp.ui.main.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.repository.MovieRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+
 
 class CurrentYearMoviesViewModel(private val movieRepository: MovieRepository) : ViewModel() {
-    private var moviesMutableLiveData = MutableLiveData<List<Result>>()
-    val moviesLiveData: LiveData<List<Result>>
-        get() = moviesMutableLiveData
+    private var _movieList = MutableLiveData<List<Result>>()
+    val moviesList: LiveData<List<Result>>
+        get() = _movieList
+
 
     init {
-        setData()
-    }
-
-    private fun setData() {
-        movieRepository.getCurrentYearMovies()
-        movieRepository.movieList.observeForever(
-            Observer {
-                moviesMutableLiveData.value = movieRepository.movieList.value!!
-            }
-
-        )
-        Log.i("testCurrent", movieRepository.movieList.value.toString())
+        viewModelScope.launch {
+            movieRepository.getCurrentYearMovies()
+                .catch { e-> Log.i("CurrentViewModelEx",e.toString()) }
+                .collect { movie->
+                    _movieList.value = movie
+                }
+        }
     }
 
 }

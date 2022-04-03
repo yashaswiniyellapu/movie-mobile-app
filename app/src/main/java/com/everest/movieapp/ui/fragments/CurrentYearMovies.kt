@@ -1,6 +1,7 @@
 package com.everest.movieapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,9 @@ import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.CurrentYearMoviesViewModel
 import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.map
+
 
 class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
 
@@ -39,9 +43,9 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
             ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
         val movieList: List<Result> = ArrayList()
         movieRecyclerViewAdapter = MovieRecyclerViewAdapter(movieList)
-        currentYearMoviesViewModel.moviesLiveData.observe(viewLifecycleOwner)
+        currentYearMoviesViewModel.moviesList.observe(viewLifecycleOwner)
         {
-            movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it)
+            movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it.map { movie -> movie })
             recyclerView.adapter = movieRecyclerViewAdapter
         }
     }

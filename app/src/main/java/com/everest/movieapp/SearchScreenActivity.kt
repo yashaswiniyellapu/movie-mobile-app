@@ -32,7 +32,7 @@ class SearchScreenActivity : AppCompatActivity() {
         searchMoviesViewModel =
             ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
 
-        searchMoviesViewModel.moviesLiveData.observe(this) {
+        searchMoviesViewModel.movieList.observe(this) {
             movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it)
             recyclerView.adapter = movieRecyclerViewAdapter
         }

@@ -3,6 +3,7 @@ package com.everest.movieapp.data.api
 import com.everest.movieapp.data.api.interceptor.ApiInterceptor
 import com.everest.movieapp.data.model.MovieDb
 import com.everest.movieapp.utils.constants.Constants
+import kotlinx.coroutines.flow.Flow
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -13,12 +14,12 @@ import retrofit2.http.Query
 interface MovieApi {
 
     @GET("3/movie/popular")
-    fun getMovies(@Query("primary_release_year") currentYear: Int? = null): Call<MovieDb>
+   suspend  fun getMovies(@Query("primary_release_year") currentYear: Int? = null): MovieDb
 
     @GET("https://api.themoviedb.org/3/search/movie")
-    fun searchMovie(
+     suspend fun searchMovie(
         @Query("query") movieName: String
-    ): Call<MovieDb>
+    ): MovieDb
 
 
     companion object {
@@ -26,7 +27,7 @@ interface MovieApi {
             .addInterceptor(ApiInterceptor())
             .build()
 
-        fun getInstance(): Retrofit {
+     fun getInstance(): Retrofit {
             return Retrofit.Builder().baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()) //coverts json to object
                 .client(okHttpClient)

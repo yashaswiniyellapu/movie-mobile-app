@@ -5,29 +5,28 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.repository.MovieRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+
 
 class PopularMoviesViewModel(private val movieRepository: MovieRepository) : ViewModel() {
-    private var moviesMutableLiveData = MutableLiveData<List<Result>>()
-
-    //    private var movieRepository = MovieRepository(context)
-    val moviesLiveData: LiveData<List<Result>>
-        get() = moviesMutableLiveData
+    private var _movieList = MutableLiveData<List<Result>>()
+    val moviesList: LiveData<List<Result>>
+        get() = _movieList
 
 
     init {
-        setData()
-    }
-
-    private fun setData() {
-
-        movieRepository.getPopularMovies()
-        movieRepository.movieList.observeForever {
-            moviesMutableLiveData.value = movieRepository.movieList.value
+        viewModelScope.launch {
+            movieRepository.getPopularMovies()
+                .catch { e-> Log.i("PopularViewModelEx",e.toString()) }
+                .collect { movie->
+                _movieList.value = movie
+            }
         }
-        Log.i("testData", movieRepository.movieList.value.toString())
-
     }
 
 }

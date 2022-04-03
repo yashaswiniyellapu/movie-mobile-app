@@ -15,6 +15,8 @@ import com.everest.movieapp.databinding.FragmentPopularMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.PopularMoviesViewModel
 import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
+import kotlinx.coroutines.FlowPreview
+
 
 class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
 
@@ -44,7 +46,7 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
             MovieRecyclerViewAdapter(movieList)
 
 
-        popularMoviesViewModel.moviesLiveData.observe(viewLifecycleOwner) {
+        popularMoviesViewModel.moviesList.observe(viewLifecycleOwner) {
             movieRecyclerViewAdapter =
                 MovieRecyclerViewAdapter(it)
             recyclerView.adapter = movieRecyclerViewAdapter
