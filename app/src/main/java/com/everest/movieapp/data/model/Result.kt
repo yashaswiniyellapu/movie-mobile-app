@@ -1,13 +1,10 @@
 package com.everest.movieapp.data.model
 
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
+
 @Entity(tableName = "result")
 data class Result(
     @PrimaryKey
@@ -37,4 +34,4 @@ data class Result(
     val vote_average: Double?,
     @ColumnInfo(name = "vote_count")
     val vote_count: Int?
-) : Parcelable
+)
