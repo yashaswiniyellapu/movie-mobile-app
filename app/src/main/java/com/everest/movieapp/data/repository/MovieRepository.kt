@@ -5,7 +5,9 @@ import android.net.ConnectivityManager
 import com.everest.movieapp.data.api.ApplicationContextProvider
 import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.Result
+import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.room.MovieRoomDataBase
+import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,9 +20,9 @@ class MovieRepository(private val movieApi: MovieApi) {
         if (checkInternetConnection()) {
             val popularMovies = movieApi.getMovies().results
             persistDataIntoRoomDatabase(popularMovies)
-            emit(popularMovies)
+            emit(setDataToUI(popularMovies))
         }
-        emit(movieRoomDataBase.movieDao().getPopularMovies())
+        emit(setDataToUI(movieRoomDataBase.movieDao().getPopularMovies()))
 
 
     }.flowOn(IO)
@@ -31,17 +33,17 @@ class MovieRepository(private val movieApi: MovieApi) {
             if (checkInternetConnection()) {
                 val currentYearMovies = movieApi.getMovies().results
                 persistDataIntoRoomDatabase(currentYearMovies)
-                emit(currentYearMovies)
+                emit(setDataToUI(currentYearMovies))
             }
-            emit(movieRoomDataBase.movieDao().getCurrentYearMovies())
+            emit(setDataToUI(movieRoomDataBase.movieDao().getCurrentYearMovies()))
         }.flowOn(IO)
 
     suspend fun searchMovie(movieName: String) = flow {
         if (checkInternetConnection()) {
             val searchedMovieResult = movieApi.searchMovie(movieName).results
-            emit(searchedMovieResult)
+            emit(setDataToUI(searchedMovieResult))
         }
-        emit(movieRoomDataBase.movieDao().searchMovie(movieName))
+        emit(setDataToUI(movieRoomDataBase.movieDao().searchMovie(movieName)))
     }
 
     private fun persistDataIntoRoomDatabase(movieList: List<Result>) {
@@ -53,6 +55,19 @@ class MovieRepository(private val movieApi: MovieApi) {
             context?.applicationContext!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!
             .isConnected
+    }
+
+    private fun setDataToUI(dbMovieDetails: List<Result>): List<UiMovieDetails> {
+      return  dbMovieDetails.map {
+            UiMovieDetails(
+                it.title,
+                it.release_date,
+                it.vote_count,
+                it.popularity,
+                it.overview,
+                IMAGE_BASE_URL+it.poster_path
+            )
+        }
     }
 
 

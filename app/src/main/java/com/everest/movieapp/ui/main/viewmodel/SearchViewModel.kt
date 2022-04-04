@@ -6,15 +6,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.everest.movieapp.data.model.Result
+import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.repository.MovieRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val movieRepository: MovieRepository) : ViewModel() {
-    private var _movieList = MutableLiveData<List<Result>>()
+    private var _movieList = MutableLiveData<List<UiMovieDetails>>()
 
     //    private var movieRepository = MovieRepository(context)
-    val movieList: LiveData<List<Result>>
+    val movieList: LiveData<List<UiMovieDetails>>
         get() = _movieList
 
 

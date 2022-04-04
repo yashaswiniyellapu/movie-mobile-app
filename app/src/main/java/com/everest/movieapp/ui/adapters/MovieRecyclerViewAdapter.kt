@@ -14,16 +14,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.everest.movieapp.R
-import com.everest.movieapp.data.model.Result
+import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
 
 class MovieRecyclerViewAdapter(
-    private var dataModel: List<Result>,
+    private var dataModel: List<UiMovieDetails>,
     private var clickListener: CustomClick
 ) :
     RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>() {
 
-    private var fullMovieList = ArrayList<Result>(dataModel)
+    private var fullMovieList = ArrayList<UiMovieDetails>(dataModel)
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -41,16 +41,14 @@ class MovieRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        fullMovieList[position].poster_path = IMAGE_BASE_URL + fullMovieList[position].poster_path
         Glide.with(holder.itemView.context)
-            .load(fullMovieList[position].poster_path)
+            .load(fullMovieList[position].posterPath)
             .into(holder.image)
-        Log.i("imageTest", fullMovieList[position].poster_path.toString())
+        Log.i("imageTest", fullMovieList[position].posterPath.toString())
 
-        holder.title.text = fullMovieList[position].title
-        holder.releaseDate.text = fullMovieList[position].release_date
-        holder.voteRate.text = fullMovieList[position].vote_count.toString()
+        holder.title.text = fullMovieList[position].movieName
+        holder.releaseDate.text = fullMovieList[position].releaseDate
+        holder.voteRate.text = fullMovieList[position].voteRate.toString()
 
 
         holder.itemView.setOnClickListener {
@@ -64,7 +62,7 @@ class MovieRecyclerViewAdapter(
     }
 
     interface CustomClick {
-        fun onClick(position: Int, context: Context, movieDetails: Result)
+        fun onClick(position: Int, context: Context, movieDetails: UiMovieDetails)
     }
 
 

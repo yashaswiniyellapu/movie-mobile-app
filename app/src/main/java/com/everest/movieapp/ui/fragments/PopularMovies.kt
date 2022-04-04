@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.DetailsScreenActivity
 import com.everest.movieapp.R
 import com.everest.movieapp.data.api.MovieApi
-import com.everest.movieapp.data.model.Result
+import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.repository.MovieRepository
 import com.everest.movieapp.databinding.FragmentPopularMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
@@ -54,7 +54,7 @@ class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
     }
 
     private val clickListener = object : MovieRecyclerViewAdapter.CustomClick {
-        override fun onClick(position: Int, context: Context, movieDetails: Result) {
+        override fun onClick(position: Int, context: Context, movieDetails: UiMovieDetails) {
             val intent = Intent(context, DetailsScreenActivity::class.java)
             intent.putExtra(Constants.MOVIE_DETAILS, movieDetails)
             context.startActivity(intent)
