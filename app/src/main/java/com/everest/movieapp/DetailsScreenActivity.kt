@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.databinding.ActivityDetailsScreenBinding
+import com.everest.movieapp.utils.constants.Constants.Companion.MOVIE_DETAILS
 
 class DetailsScreenActivity : AppCompatActivity() {
 
@@ -16,7 +17,7 @@ class DetailsScreenActivity : AppCompatActivity() {
         binding = ActivityDetailsScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val movieData = intent.getParcelableExtra<Result>("dataset")
+        val movieData = intent.getParcelableExtra<Result>(MOVIE_DETAILS)
         Glide.with(this)
             .load(movieData?.poster_path)
             .into(binding.imageViewTv)

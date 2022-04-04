@@ -2,21 +2,13 @@ package com.everest.movieapp.data.repository
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
-import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.api.ApplicationContextProvider
-import com.everest.movieapp.data.model.MovieDb
+import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.room.MovieRoomDataBase
-import com.everest.movieapp.ui.fragments.CurrentYearMovies
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.time.LocalDate
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class MovieRepository(private val movieApi: MovieApi) {
     private val context = ApplicationContextProvider.getInstance()
@@ -44,7 +36,7 @@ class MovieRepository(private val movieApi: MovieApi) {
             emit(movieRoomDataBase.movieDao().getCurrentYearMovies())
         }.flowOn(IO)
 
-   suspend fun searchMovie(movieName: String) = flow {
+    suspend fun searchMovie(movieName: String) = flow {
         if (checkInternetConnection()) {
             val searchedMovieResult = movieApi.searchMovie(movieName).results
             emit(searchedMovieResult)
@@ -52,7 +44,7 @@ class MovieRepository(private val movieApi: MovieApi) {
         emit(movieRoomDataBase.movieDao().searchMovie(movieName))
     }
 
-    private fun persistDataIntoRoomDatabase(movieList:List<Result>) {
+    private fun persistDataIntoRoomDatabase(movieList: List<Result>) {
         movieRoomDataBase.movieDao().insertAll(movieList)
     }
 
