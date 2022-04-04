@@ -25,7 +25,6 @@ abstract class MovieRoomDataBase : RoomDatabase() {
                 INSTANCE = Room
                     .databaseBuilder(context, MovieRoomDataBase::class.java, "LOGIN_DATABASE")
                     .fallbackToDestructiveMigration()
-                    .allowMainThreadQueries()
                     .build()
 
                 return INSTANCE!!

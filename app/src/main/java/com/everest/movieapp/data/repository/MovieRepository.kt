@@ -46,7 +46,7 @@ class MovieRepository(private val movieApi: MovieApi) {
         emit(setDataToUI(movieRoomDataBase.movieDao().searchMovie(movieName)))
     }
 
-    private fun persistDataIntoRoomDatabase(movieList: List<Result>) {
+    private suspend fun persistDataIntoRoomDatabase(movieList: List<Result>) {
         movieRoomDataBase.movieDao().insertAll(movieList)
     }
 

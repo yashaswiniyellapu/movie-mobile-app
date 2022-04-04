@@ -43,8 +43,6 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
             ViewModelFactory(MovieRepository(MovieApi.getInstance().create(MovieApi::class.java)))
         currentYearMoviesViewModel =
             ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
-//        val movieList: List<Result> = ArrayList()
-//        movieRecyclerViewAdapter = MovieRecyclerViewAdapter(movieList,clickListener)
         currentYearMoviesViewModel.moviesList.observe(viewLifecycleOwner)
         {
             movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it, clickListener)
