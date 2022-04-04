@@ -18,7 +18,7 @@ import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.CurrentYearMoviesViewModel
 import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
-import com.everest.movieapp.utils.constants.Constants.Companion.MOVIE_DETAILS
+import com.everest.movieapp.utils.constants.Constants.MOVIE_DETAILS
 
 
 class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {

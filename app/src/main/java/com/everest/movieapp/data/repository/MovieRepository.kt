@@ -7,7 +7,7 @@ import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.room.MovieRoomDataBase
-import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
+import com.everest.movieapp.utils.constants.Constants.IMAGE_BASE_URL
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -58,14 +58,14 @@ class MovieRepository(private val movieApi: MovieApi) {
     }
 
     private fun setDataToUI(dbMovieDetails: List<Result>): List<UiMovieDetails> {
-      return  dbMovieDetails.map {
+        return dbMovieDetails.map {
             UiMovieDetails(
                 it.title,
                 it.release_date,
                 it.vote_count,
                 it.popularity,
                 it.overview,
-                IMAGE_BASE_URL+it.poster_path
+                IMAGE_BASE_URL + it.poster_path
             )
         }
     }

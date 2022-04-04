@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.everest.movieapp.R
 import com.everest.movieapp.data.model.UiMovieDetails
-import com.everest.movieapp.utils.constants.Constants.Companion.IMAGE_BASE_URL
 
 class MovieRecyclerViewAdapter(
     private var dataModel: List<UiMovieDetails>,

@@ -17,6 +17,7 @@ class SectionsPagerAdapter(
     FragmentPagerAdapter(fm) {
 
     private var fragmentList: List<Fragment> = listOf(PopularMovies(), CurrentYearMovies())
+    private var fragmentNamesList: List<String> = listOf("")
 
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
@@ -28,7 +29,7 @@ class SectionsPagerAdapter(
     override fun getPageTitle(position: Int): CharSequence {
         val tabNames = ArrayList<String>()
         tabNames.add("PopularMovies")
-        tabNames.add("CurrentYearMovies")
+        tabNames.add("LatestMovies")
         return tabNames[position]
     }
 

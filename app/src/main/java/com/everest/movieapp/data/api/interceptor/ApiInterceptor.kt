@@ -1,6 +1,6 @@
 package com.everest.movieapp.data.api.interceptor
 
-import com.everest.movieapp.utils.constants.Constants.Companion.API_KEY
+import com.everest.movieapp.utils.constants.Constants.API_KEY
 import okhttp3.Interceptor
 import okhttp3.Response
 

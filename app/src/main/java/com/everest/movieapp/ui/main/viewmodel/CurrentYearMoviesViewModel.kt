@@ -1,12 +1,13 @@
 package com.everest.movieapp.ui.main.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.*
-import com.everest.movieapp.data.model.Result
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.repository.MovieRepository
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 
@@ -19,8 +20,8 @@ class CurrentYearMoviesViewModel(private val movieRepository: MovieRepository) :
     init {
         viewModelScope.launch {
             movieRepository.getCurrentYearMovies()
-                .catch { e-> Log.i("CurrentViewModelEx",e.toString()) }
-                .collect { movie->
+                .catch { e -> Log.i("CurrentViewModelEx", e.toString()) }
+                .collect { movie ->
                     _movieList.value = movie
                 }
         }
