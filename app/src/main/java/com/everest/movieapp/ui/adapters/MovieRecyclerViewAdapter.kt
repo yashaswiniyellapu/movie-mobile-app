@@ -22,12 +22,12 @@ class MovieRecyclerViewAdapter(
     private var clickListener: CustomClick
 ) :
     RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>() {
+    private var fullMovieList = ArrayList<UiMovieDetails>()
 
     init {
         compareChangedData()
     }
 
-    private var fullMovieList = ArrayList<UiMovieDetails>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
