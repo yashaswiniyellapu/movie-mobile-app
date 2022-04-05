@@ -1,6 +1,5 @@
 package com.everest.movieapp.ui.adapters
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -11,12 +10,13 @@ import com.everest.movieapp.ui.fragments.PopularMovies
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(fm: FragmentManager
+class SectionsPagerAdapter(
+    fm: FragmentManager
 ) :
     FragmentPagerAdapter(fm) {
 
     private var fragmentList: List<Fragment> = listOf(PopularMovies(), CurrentYearMovies())
-    private var fragmentNamesList: List<String> = listOf("")
+    private var fragmentNamesList: List<String> = listOf("PopularMovies","LatestMovies")
 
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
@@ -26,10 +26,8 @@ class SectionsPagerAdapter(fm: FragmentManager
 
 
     override fun getPageTitle(position: Int): CharSequence {
-        val tabNames = ArrayList<String>()
-        tabNames.add("PopularMovies")
-        tabNames.add("LatestMovies")
-        return tabNames[position]
+
+        return fragmentNamesList[position]
     }
 
 
