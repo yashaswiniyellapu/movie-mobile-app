@@ -1,9 +1,5 @@
 package com.everest.movieapp.ui.adapters
 
-/**
- * Recycler view adapter sets the data in view.
- */
-
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater

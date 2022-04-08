@@ -24,7 +24,7 @@ import com.everest.movieapp.utils.constants.Constants
 import com.everest.movieapp.utils.isConnected
 
 
-class PopularMovies : Fragment(R.layout.fragment_current_year_movies) {
+class PopularMoviesFragment : Fragment(R.layout.fragment_current_year_movies) {
 
     private lateinit var binding: FragmentPopularMoviesBinding
     private lateinit var recyclerView: RecyclerView

@@ -3,9 +3,8 @@ package com.everest.movieapp.ui.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.everest.movieapp.R
-import com.everest.movieapp.ui.fragments.CurrentYearMovies
-import com.everest.movieapp.ui.fragments.PopularMovies
+import com.everest.movieapp.ui.fragments.CurrentYearMoviesFragment
+import com.everest.movieapp.ui.fragments.PopularMoviesFragment
 import java.lang.RuntimeException
 
 
@@ -15,8 +14,8 @@ class SectionsPagerAdapter(private val titles: Array<String>, fm: FragmentManage
 
         return when(position)
         {
-            0 -> PopularMovies()
-            1 -> CurrentYearMovies()
+            0 -> PopularMoviesFragment()
+            1 -> CurrentYearMoviesFragment()
             else -> {
                 throw RuntimeException("Not found")
             }
