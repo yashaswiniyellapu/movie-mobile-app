@@ -15,9 +15,7 @@ interface MovieApi {
     suspend fun getMovies(@Query("primary_release_year") currentYear: Int? = null): MovieDb
 
     @GET("https://api.themoviedb.org/3/search/movie")
-    suspend fun searchMovie(
-        @Query("query") movieName: String
-    ): MovieDb
+    suspend fun searchMovie(@Query("query") movieName: String?): MovieDb
 
 
     companion object {

@@ -14,11 +14,14 @@ import com.everest.movieapp.R
 import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.repository.MovieRepository
+import com.everest.movieapp.data.room.MovieRoomDataBase
 import com.everest.movieapp.databinding.FragmentCurrentYearMoviesBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.CurrentYearMoviesViewModel
 import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
+import com.everest.movieapp.utils.MakeToast
 import com.everest.movieapp.utils.constants.Constants.MOVIE_DETAILS
+import com.everest.movieapp.utils.isConnected
 
 
 class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
@@ -39,16 +42,26 @@ class CurrentYearMovies : Fragment(R.layout.fragment_popular_movies) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.currentYearRecyclerView
+        val connected = requireContext().isConnected()
         viewModelFactory =
-            ViewModelFactory(MovieRepository(MovieApi.getInstance().create(MovieApi::class.java)))
+            ViewModelFactory(
+                MovieRepository(
+                    MovieApi.getInstance().create(MovieApi::class.java),
+                    MovieRoomDataBase.getDatabase(requireContext()).movieDao(),
+                    connected
+                )
+            )
         currentYearMoviesViewModel =
             ViewModelProvider(this, viewModelFactory)[CurrentYearMoviesViewModel::class.java]
-        currentYearMoviesViewModel.moviesList.observe(viewLifecycleOwner)
-        {
-            movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it, clickListener)
-
-            recyclerView.adapter = movieRecyclerViewAdapter
+        movieRecyclerViewAdapter = MovieRecyclerViewAdapter(clickListener)
+        recyclerView.adapter = movieRecyclerViewAdapter
+        currentYearMoviesViewModel.moviesList.observe(viewLifecycleOwner) {
+            movieRecyclerViewAdapter.setMovies(it as ArrayList<UiMovieDetails>)
         }
+        currentYearMoviesViewModel.error.observe(viewLifecycleOwner){
+            requireContext().MakeToast(it!!)
+        }
+
     }
 
     private val clickListener = object : MovieRecyclerViewAdapter.CustomClick {

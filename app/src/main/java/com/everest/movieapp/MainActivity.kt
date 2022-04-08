@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter( supportFragmentManager)
+        val sectionsPagerAdapter = SectionsPagerAdapter(resources.getStringArray(R.array.titles), supportFragmentManager)
         val viewPager: ViewPager = binding.viewPager
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = binding.tabs

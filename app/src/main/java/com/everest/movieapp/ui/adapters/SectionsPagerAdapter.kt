@@ -3,37 +3,34 @@ package com.everest.movieapp.ui.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.everest.movieapp.R
 import com.everest.movieapp.ui.fragments.CurrentYearMovies
 import com.everest.movieapp.ui.fragments.PopularMovies
+import java.lang.RuntimeException
 
-/**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
- * one of the sections/tabs/pages.
- */
-class SectionsPagerAdapter(
-    fm: FragmentManager
-) :
-    FragmentPagerAdapter(fm) {
 
-    private var fragmentList: List<Fragment> = listOf(PopularMovies(), CurrentYearMovies())
-    private var fragmentNamesList: List<String> = listOf("PopularMovies","LatestMovies")
+class SectionsPagerAdapter(private val titles: Array<String>, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return fragmentList[position]
+
+        return when(position)
+        {
+            0 -> PopularMovies()
+            1 -> CurrentYearMovies()
+            else -> {
+                throw RuntimeException("Not found")
+            }
+        }
     }
 
 
     override fun getPageTitle(position: Int): CharSequence {
-
-        return fragmentNamesList[position]
+        return titles[position]
     }
 
 
     override fun getCount(): Int {
-        // Show 2 total pages.
-        return fragmentList.size
+        return titles.size
     }
 
 }

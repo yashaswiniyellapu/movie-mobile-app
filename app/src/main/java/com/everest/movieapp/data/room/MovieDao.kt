@@ -18,5 +18,5 @@ interface MovieDao {
     suspend fun getCurrentYearMovies(): List<Result>
 
     @Query("select * from result as r where title like  '%'||:movieName ||'%'")
-    suspend fun searchMovie(movieName: String): List<Result>
+    suspend fun searchMovie(movieName: String?): List<Result>
 }

@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.UiMovieDetails
 import com.everest.movieapp.data.repository.MovieRepository
+import com.everest.movieapp.data.room.MovieRoomDataBase
 import com.everest.movieapp.databinding.ActivitySearchScreenBinding
 import com.everest.movieapp.ui.adapters.MovieRecyclerViewAdapter
 import com.everest.movieapp.ui.main.viewmodel.SearchViewModel
 import com.everest.movieapp.ui.main.viewmodel.ViewModelFactory
+import com.everest.movieapp.utils.MakeToast
 import com.everest.movieapp.utils.constants.Constants
+import com.everest.movieapp.utils.isConnected
 
 class SearchScreenActivity : AppCompatActivity() {
 
@@ -31,18 +34,27 @@ class SearchScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
         recyclerView = binding.searchTv
 
+        val connected = this.isConnected()
         viewModelFactory =
-            ViewModelFactory(MovieRepository(MovieApi.getInstance().create(MovieApi::class.java)))
+            ViewModelFactory(
+                MovieRepository(
+                    MovieApi.getInstance().create(MovieApi::class.java),
+                    MovieRoomDataBase.getDatabase(this).movieDao(),
+                    connected
+                )
+            )
 
         searchMoviesViewModel =
             ViewModelProvider(this, viewModelFactory).get(SearchViewModel::class.java)
-
+        movieRecyclerViewAdapter = MovieRecyclerViewAdapter(clickListener)
+        recyclerView.adapter = movieRecyclerViewAdapter
         searchMoviesViewModel.movieList.observe(this) {
-            movieRecyclerViewAdapter = MovieRecyclerViewAdapter(it, clickListener)
-            recyclerView.adapter = movieRecyclerViewAdapter
+            movieRecyclerViewAdapter.setMovies(it as ArrayList<UiMovieDetails>)
+
         }
-
-
+        searchMoviesViewModel.error.observe(this){
+            this.MakeToast(it!!)
+        }
     }
 
     private val clickListener = object : MovieRecyclerViewAdapter.CustomClick {
@@ -63,7 +75,7 @@ class SearchScreenActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchMoviesViewModel.setData(newText!!)
+                searchMoviesViewModel.setData(newText)
                 return false
             }
 

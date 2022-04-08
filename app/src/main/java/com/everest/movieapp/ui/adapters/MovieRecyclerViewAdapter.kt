@@ -17,17 +17,17 @@ import com.bumptech.glide.Glide
 import com.everest.movieapp.R
 import com.everest.movieapp.data.model.UiMovieDetails
 
-class MovieRecyclerViewAdapter(
-    private var dataModel: List<UiMovieDetails>,
-    private var clickListener: CustomClick
-) :
+class MovieRecyclerViewAdapter(private var clickListener: CustomClick) :
     RecyclerView.Adapter<MovieRecyclerViewAdapter.MyViewHolder>() {
     private var fullMovieList = ArrayList<UiMovieDetails>()
 
-    init {
-        compareChangedData()
+    fun setMovies(newMovieList: ArrayList<UiMovieDetails>) {
+        val diffUtil = com.everest.movieapp.utils.DiffUtil(fullMovieList, newMovieList)
+        val result = DiffUtil.calculateDiff(diffUtil)
+        fullMovieList.clear()
+        fullMovieList = newMovieList
+        result.dispatchUpdatesTo(this)
     }
-
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -35,14 +35,6 @@ class MovieRecyclerViewAdapter(
         val releaseDate: TextView = itemView.findViewById(R.id.release_date)
         val voteRate: TextView = itemView.findViewById(R.id.vote_average)
         val image: ImageView = itemView.findViewById(R.id.image_view)
-    }
-
-    private fun compareChangedData() {
-        val diffUtil = com.everest.movieapp.utils.DiffUtil(fullMovieList, dataModel)
-        val result = DiffUtil.calculateDiff(diffUtil)
-        fullMovieList.clear()
-        fullMovieList = dataModel as ArrayList<UiMovieDetails>
-        result.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -56,8 +48,6 @@ class MovieRecyclerViewAdapter(
         Glide.with(holder.itemView.context)
             .load(fullMovieList[position].posterPath)
             .into(holder.image)
-        Log.i("imageTest", fullMovieList[position].posterPath.toString())
-
         holder.title.text = fullMovieList[position].movieName
         holder.releaseDate.text = fullMovieList[position].releaseDate
         holder.voteRate.text = fullMovieList[position].voteRate.toString()
@@ -69,7 +59,7 @@ class MovieRecyclerViewAdapter(
     }
 
 
-    override fun getItemCount(): Int {   //gets the item count
+    override fun getItemCount(): Int {
         return fullMovieList.size
     }
 

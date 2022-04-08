@@ -1,60 +1,65 @@
 package com.everest.movieapp.data.repository
 
-import android.content.Context
-import android.net.ConnectivityManager
-import com.everest.movieapp.data.api.ApplicationContextProvider
 import com.everest.movieapp.data.api.MovieApi
 import com.everest.movieapp.data.model.Result
 import com.everest.movieapp.data.model.UiMovieDetails
-import com.everest.movieapp.data.room.MovieRoomDataBase
+import com.everest.movieapp.data.room.MovieDao
+import com.everest.movieapp.ui.RepositoryState
 import com.everest.movieapp.utils.constants.Constants.IMAGE_BASE_URL
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
-class MovieRepository(private val movieApi: MovieApi) {
-    private val context = ApplicationContextProvider.getInstance()
-    private var movieRoomDataBase = MovieRoomDataBase.getDatabase(context?.applicationContext!!)
+class MovieRepository(
+    private val movieApi: MovieApi,
+    private val movieDao: MovieDao,
+    private val connected: Boolean
+) {
 
-    suspend fun getPopularMovies() = flow {
-        if (checkInternetConnection()) {
-            val popularMovies = movieApi.getMovies().results
-            persistDataIntoRoomDatabase(popularMovies)
-            emit(setDataToUI(popularMovies))
+    suspend fun getPopularMovies(): RepositoryState {
+        try {
+            if (connected) {
+                val popularMovies = movieApi.getMovies().results
+                persistDataIntoRoomDatabase(popularMovies)
+                return (RepositoryState.Success(setDataToUI(popularMovies)))
+            }
+            return (RepositoryState.Success(setDataToUI(movieDao.getPopularMovies())))
+        } catch (e: Exception) {
+            return RepositoryState.Error(e.message)
         }
-        emit(setDataToUI(movieRoomDataBase.movieDao().getPopularMovies()))
+
+    }
 
 
-    }.flowOn(IO)
-
-
-    suspend fun getCurrentYearMovies() =
-        flow {
-            if (checkInternetConnection()) {
+    suspend fun getCurrentYearMovies(): RepositoryState {
+        try {
+            if (connected) {
                 val currentYearMovies = movieApi.getMovies().results
                 persistDataIntoRoomDatabase(currentYearMovies)
-                emit(setDataToUI(currentYearMovies))
+                return (RepositoryState.Success(setDataToUI(currentYearMovies)))
             }
-            emit(setDataToUI(movieRoomDataBase.movieDao().getCurrentYearMovies()))
-        }.flowOn(IO)
-
-    suspend fun searchMovie(movieName: String) = flow {
-        if (checkInternetConnection()) {
-            val searchedMovieResult = movieApi.searchMovie(movieName).results
-            emit(setDataToUI(searchedMovieResult))
+            return (RepositoryState.Success(
+                setDataToUI(
+                    movieDao.getCurrentYearMovies()
+                )
+            ))
+        } catch (e: Exception) {
+            return RepositoryState.Error(e.message)
         }
-        emit(setDataToUI(movieRoomDataBase.movieDao().searchMovie(movieName)))
+    }
+
+    suspend fun searchMovie(movieName: String?): RepositoryState {
+        try {
+
+            if (connected) {
+                val searchedMovieResult = movieApi.searchMovie(movieName).results
+                return RepositoryState.Success(setDataToUI(searchedMovieResult))
+            }
+            return RepositoryState.Success(setDataToUI(movieDao.searchMovie(movieName)))
+        } catch (e: Exception) {
+            return RepositoryState.Error(e.message)
+        }
     }
 
     private suspend fun persistDataIntoRoomDatabase(movieList: List<Result>) {
-        movieRoomDataBase.movieDao().insertAll(movieList)
-    }
-
-    private fun checkInternetConnection(): Boolean {
-        val connectivityManager =
-            context?.applicationContext!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!
-            .isConnected
+        movieDao.insertAll(movieList)
     }
 
     private fun setDataToUI(dbMovieDetails: List<Result>): List<UiMovieDetails> {
